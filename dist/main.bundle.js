@@ -23093,15 +23093,22 @@ var _View_AppComponent1 = (function (_super) {
         return notFoundResult;
     };
     _View_AppComponent1.prototype.detectChangesInternal = function (throwOnChange) {
+        var changed = true;
+        changed = false;
         var currVal_0 = this.context.$implicit;
         if (__WEBPACK_IMPORTED_MODULE_3__angular_core_src_linker_view_utils__["e" /* checkBinding */](throwOnChange, this._expr_0, currVal_0)) {
             this._SquareBoxComponent_0_4.box = currVal_0;
+            changed = true;
             this._expr_0 = currVal_0;
         }
         var currVal_1 = (this.context.$implicit.id == this.parent.context.currentId);
         if (__WEBPACK_IMPORTED_MODULE_3__angular_core_src_linker_view_utils__["e" /* checkBinding */](throwOnChange, this._expr_1, currVal_1)) {
             this._SquareBoxComponent_0_4.selected = currVal_1;
+            changed = true;
             this._expr_1 = currVal_1;
+        }
+        if (changed) {
+            this._appEl_0.componentView.markAsCheckOnce();
         }
         this.detectContentChildrenChanges(throwOnChange);
         this.detectViewChildrenChanges(throwOnChange);
@@ -23132,11 +23139,7 @@ var AppComponent = (function () {
             var id = i;
             var x = getRandomInt(0, 500);
             var y = getRandomInt(0, 500);
-            var box = {
-                id: id,
-                x: x,
-                y: y
-            };
+            var box = { id: id, x: x, y: y };
             this.boxes.push(box);
         }
     };
@@ -23158,9 +23161,7 @@ var AppComponent = (function () {
         this.currentId = null;
     };
     AppComponent.prototype.updateBox = function (id, x, y) {
-        var box = this.boxes[id];
-        box.x = x;
-        box.y = y;
+        this.boxes[id] = { id: id, x: x, y: y };
     };
     return AppComponent;
 }());
@@ -23648,7 +23649,7 @@ var renderType_SquareBoxComponent = null;
 var _View_SquareBoxComponent0 = (function (_super) {
     __extends(_View_SquareBoxComponent0, _super);
     function _View_SquareBoxComponent0(viewUtils, parentInjector, declarationEl) {
-        _super.call(this, _View_SquareBoxComponent0, renderType_SquareBoxComponent, __WEBPACK_IMPORTED_MODULE_4__angular_core_src_linker_view_type__["a" /* ViewType */].COMPONENT, viewUtils, parentInjector, declarationEl, __WEBPACK_IMPORTED_MODULE_5__angular_core_src_change_detection_change_detection__["f" /* ChangeDetectorStatus */].CheckAlways);
+        _super.call(this, _View_SquareBoxComponent0, renderType_SquareBoxComponent, __WEBPACK_IMPORTED_MODULE_4__angular_core_src_linker_view_type__["a" /* ViewType */].COMPONENT, viewUtils, parentInjector, declarationEl, __WEBPACK_IMPORTED_MODULE_5__angular_core_src_change_detection_change_detection__["f" /* ChangeDetectorStatus */].CheckOnce);
     }
     _View_SquareBoxComponent0.prototype.createInternal = function (rootSelector) {
         var parentRenderNode = this.renderer.createViewRoot(this.declarationAppElement.nativeElement);

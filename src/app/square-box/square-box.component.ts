@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: '[square-box]',
@@ -24,7 +24,8 @@ import { Component, OnInit, Input } from '@angular/core';
       stroke="black"
       fill="transparent"
       strokeWidth="1"></svg:rect>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SquareBoxComponent {
   @Input() box;

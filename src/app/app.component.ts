@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
@@ -28,16 +28,13 @@ export class AppComponent {
   offsetX;
   offsetY;
 
+
   ngOnInit() {
     for (let i=0; i < 5000; i++) {
       const id = i;
       const x = getRandomInt(0, 500);
       const y = getRandomInt(0, 500);
-      const box = {
-        id,
-        x,
-        y
-      };
+      const box = { id, x, y };
       this.boxes.push(box);
     }
   }
@@ -63,9 +60,6 @@ export class AppComponent {
   }
 
   updateBox(id, x, y) {
-    const box = this.boxes[id];
-    box.x = x;
-    box.y = y;
+    this.boxes[id] = { id, x, y };
   }
-
 }
