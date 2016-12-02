@@ -5,9 +5,9 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core
   template: `
     <svg:rect
       *ngIf="selected"
-      [attr.dataId]="box.id"
-      [attr.x]="box.x"
-      [attr.y]="box.y"
+      [attr.dataId]="id"
+      [attr.x]="x"
+      [attr.y]="y"
       width="10"
       height="10"
       stroke="red"
@@ -16,9 +16,9 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core
 
     <svg:rect
       *ngIf="!selected"
-      [attr.dataId]="box.id"
-      [attr.x]="box.x"
-      [attr.y]="box.y"
+      [attr.dataId]="id"
+      [attr.x]="x"
+      [attr.y]="y"
       width="10"
       height="10"
       stroke="black"
@@ -28,6 +28,8 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SquareBoxComponent {
-  @Input() box;
+  @Input() id;
+  @Input() x;
+  @Input() y;
   @Input() selected;
 }

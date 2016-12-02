@@ -15,7 +15,9 @@ function getRandomInt(min, max) {
       <svg:g
         square-box
         *ngFor="let box of boxes"
-        [box]="box"
+        [id]="box.id"
+        [x]="box.x"
+        [y]="box.y"
         [selected]="box.id == currentId"
         ></svg:g>
     </svg>
@@ -60,6 +62,9 @@ export class AppComponent {
   }
 
   updateBox(id, x, y) {
-    this.boxes[id] = { id, x, y };
+    this.boxes[id].id = id;
+    this.boxes[id].x = x
+    this.boxes[id].y = y
+
   }
 }
