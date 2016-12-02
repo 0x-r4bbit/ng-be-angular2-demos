@@ -14,7 +14,7 @@ function getRandomInt(min, max) {
       >
       <svg:g
         square-box
-        *ngFor="let box of boxes"
+        *ngFor="let box of boxes; trackBy:trackByBoxId"
         [box]="box"
         [selected]="box.id == currentId"
         ></svg:g>
@@ -47,6 +47,10 @@ export class AppComponent {
     this.offsetX = box.x - mouseX;
     this.offsetY = box.y - mouseY;
     this.currentId = id;
+  }
+
+  trackByBoxId(index, box) {
+    return box.id;
   }
 
   mouseMove(event) {
