@@ -5,11 +5,13 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { SquareBoxComponent } from './square-box/square-box.component';
+import {SimpleNgFor} from './simple_ng_for';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SquareBoxComponent
+    SquareBoxComponent,
+    SimpleNgFor
   ],
   imports: [BrowserModule],
   bootstrap: [AppComponent]
