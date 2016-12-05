@@ -1,4 +1,5 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import { SquareBoxComponent } from './square-box/square-box.component';
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
@@ -16,18 +17,19 @@ function getRandomInt(min, max) {
         square-box
         *simpleNgFor="let box of boxes"
         [box]="box"
-        [selected]="box.id == currentId"
         ></svg:g>
     </svg>
   `
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
 
-  currentId = null;
+  currentBoxCmp: SquareBoxComponent = null;
   boxes = [];
   offsetX;
   offsetY;
 
+  constructor(private cdRef: ChangeDetectorRef) {
+  }
 
   ngOnInit() {
     for (let i=0; i < 2000; i++) {
@@ -39,27 +41,41 @@ export class AppComponent {
     }
   }
 
+  ngAfterViewInit() {
+    this.cdRef.detach();
+  }
+
   mouseDown(event) {
-    const id = Number(event.target.getAttribute("dataId"));
-    const box = this.boxes[id];
-    const mouseX = event.clientX;
-    const mouseY = event.clientY;
-    this.offsetX = box.x - mouseX;
-    this.offsetY = box.y - mouseY;
-    this.currentId = id;
+    const boxComp = <SquareBoxComponent> event.target['SquareBoxComponent'];
+    if (boxComp) {
+      const box = boxComp.box;
+      const mouseX = event.clientX;
+      const mouseY = event.clientY;
+      this.offsetX = box.x - mouseX;
+      this.offsetY = box.y - mouseY;
+      this.currentBoxCmp = boxComp;
+      boxComp.selected = true;
+      boxComp.update();
+    }
   }
 
   mouseMove(event) {
-    if (this.currentId !== null) {
-      this.updateBox(this.currentId, event.clientX + this.offsetX, event.clientY + this.offsetY);
+    if (this.currentBoxCmp !== null) {
+      this.update(this.currentBoxCmp, event.clientX + this.offsetX, event.clientY + this.offsetY);
     }
   }
 
   mouseUp($event) {
-    this.currentId = null;
+    if (this.currentBoxCmp) {
+      this.currentBoxCmp.selected = false;
+      this.currentBoxCmp.update();
+    }
+    this.currentBoxCmp = null;
   }
 
-  updateBox(id, x, y) {
-    this.boxes[id] = { id, x, y };
+  update(cmp: SquareBoxComponent, x: number, y: number) {
+    cmp.box.x = x;
+    cmp.box.y = y;
+    cmp.update();
   }
 }

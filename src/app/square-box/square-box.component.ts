@@ -1,11 +1,11 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, ElementRef, ViewChild, AfterViewInit, Directive } from '@angular/core';
 
 @Component({
   selector: '[square-box]',
   template: `
     <svg:rect
       *ngIf="selected"
-      [attr.dataId]="box.id"
+      #rect
       [attr.x]="box.x"
       [attr.y]="box.y"
       width="10"
@@ -16,7 +16,7 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core
 
     <svg:rect
       *ngIf="!selected"
-      [attr.dataId]="box.id"
+      #rect
       [attr.x]="box.x"
       [attr.y]="box.y"
       width="10"
@@ -24,10 +24,26 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core
       stroke="black"
       fill="transparent"
       strokeWidth="1"></svg:rect>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
-export class SquareBoxComponent {
+export class SquareBoxComponent implements AfterViewInit {
   @Input() box;
-  @Input() selected;
+  selected = false;
+
+  @ViewChild('rect')
+  set rect(value: ElementRef) {
+    if (value) {
+      value.nativeElement['SquareBoxComponent'] = this;
+    }
+  }
+
+  constructor(private cdRef: ChangeDetectorRef) {}
+
+  ngAfterViewInit() {
+    this.cdRef.detach();
+  }
+
+  update() {
+    this.cdRef.detectChanges();
+  }
 }
