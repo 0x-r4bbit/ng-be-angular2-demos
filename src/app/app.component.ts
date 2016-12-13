@@ -60,6 +60,7 @@ export class AppComponent implements AfterViewInit {
   }
 
   mouseMove(event) {
+    event.preventDefault();
     if (this.currentBoxCmp !== null) {
       this.update(this.currentBoxCmp, event.clientX + this.offsetX, event.clientY + this.offsetY);
     }
